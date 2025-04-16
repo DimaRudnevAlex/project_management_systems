@@ -1,8 +1,10 @@
+import IssuesRoot from '../../components/issues'
+
 const IssuesPage = () => {
     return (
-        <div>
-            <h1>IssuesPage</h1>
-        </div>
+        <>
+            <IssuesRoot />
+        </>
     )
 }
 

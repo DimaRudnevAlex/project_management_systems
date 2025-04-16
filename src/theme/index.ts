@@ -10,7 +10,7 @@ export const tokens = (mode: 'light' | 'dark'): Tokens => ({
                   DEFAULT: '#2C2C32',
               },
               secondary: {
-                  DEFAULT: '#7C7C7C',
+                  DEFAULT: '#FFFFFF',
               },
               black: {
                   DEFAULT: '#000000',
@@ -38,7 +38,7 @@ export const tokens = (mode: 'light' | 'dark'): Tokens => ({
                   DEFAULT: '#000000',
               },
               gray: {
-                  DEFAULT: '#3C3C3C',
+                  DEFAULT: '#c7c7c7',
               },
               accentColor: '#796fc2',
               borderColor: '#3f3f3f',
