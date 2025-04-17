@@ -1,9 +1,8 @@
+import NavMenu from '@/components/header/nav-menu'
+import ThemeSwitcher from '@/components/theme-switcher'
+import UiButton from '@/components/uikit/Button'
+import { tokens } from '@/theme'
 import { AppBar, Box, Toolbar, useTheme } from '@mui/material'
-
-import { tokens } from '../../theme'
-import ThemeSwitcher from '../theme-switcher'
-import UiButton from '../uikit/Button'
-import NavMenu from './nav-menu'
 
 const Header = () => {
     const theme = useTheme()

@@ -1,7 +1,6 @@
+import { ThemeSettings, Tokens } from '@/@types/theme'
 import { createTheme, Theme } from '@mui/material'
 import { createContext, useContext, useState } from 'react'
-
-import { ThemeSettings, Tokens } from '../@types/theme'
 
 export const tokens = (mode: 'light' | 'dark'): Tokens => ({
     ...(mode === 'dark'

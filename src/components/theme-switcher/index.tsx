@@ -1,8 +1,7 @@
+import { useColorMode } from '@/theme'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import { IconButton, useTheme } from '@mui/material'
-
-import { useColorMode } from '../../theme'
 
 const ThemeSwitcher = () => {
     const theme = useTheme()

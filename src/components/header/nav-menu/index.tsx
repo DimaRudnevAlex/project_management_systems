@@ -1,7 +1,6 @@
+import CustomLink from '@/components/custom-link'
+import { configPage } from '@/utils/config-page'
 import { Box, Typography } from '@mui/material'
-
-import { configPage } from '../../../utils/config-page'
-import CustomLink from '../../custom-link'
 
 const NavMenu = () => {
     return (

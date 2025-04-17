@@ -1,9 +1,8 @@
+import { ICustomLink } from '@/@types/custom-link'
+import { tokens } from '@/theme'
 import { useTheme } from '@mui/material'
 import { FC } from 'react'
 import { Link, useMatch } from 'react-router'
-
-import { ICustomLink } from '../../@types/custom-link'
-import { tokens } from '../../theme'
 
 const CustomLink: FC<ICustomLink> = ({ children, to }) => {
     const theme = useTheme()

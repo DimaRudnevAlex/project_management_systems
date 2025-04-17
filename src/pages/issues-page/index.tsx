@@ -1,4 +1,4 @@
-import IssuesRoot from '../../components/issues'
+import IssuesRoot from '@/components/issues'
 
 const IssuesPage = () => {
     return (

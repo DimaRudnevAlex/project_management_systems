@@ -1,6 +1,5 @@
+import { tokens } from '@/theme'
 import { Button, useTheme } from '@mui/material'
-
-import { tokens } from '../../../theme'
 
 const UiButton = () => {
     const theme = useTheme()

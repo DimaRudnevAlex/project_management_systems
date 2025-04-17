@@ -1,7 +1,6 @@
+import AppRouting from '@/routing'
+import { ColorModeContext, useMode } from '@/theme'
 import { CssBaseline, ThemeProvider } from '@mui/material'
-
-import AppRouting from './routing'
-import { ColorModeContext, useMode } from './theme'
 
 function App() {
     const [colorMode, theme] = useMode()

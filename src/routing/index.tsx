@@ -1,10 +1,9 @@
+import MainLayout from '@/layouts/main-layout'
+import BoardByIdPage from '@/pages/board-by-id-page'
+import BoardsPage from '@/pages/boards-page'
+import IssuesPage from '@/pages/issues-page'
+import { configPage } from '@/utils/config-page'
 import { Navigate, Route, Routes } from 'react-router'
-
-import MainLayout from '../layouts/main-layout'
-import BoardByIdPage from '../pages/board-by-id-page'
-import BoardsPage from '../pages/boards-page'
-import IssuesPage from '../pages/issues-page'
-import { configPage } from '../utils/config-page'
 
 const AppRouting = () => {
     return (

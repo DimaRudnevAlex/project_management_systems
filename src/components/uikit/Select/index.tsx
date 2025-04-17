@@ -1,21 +1,24 @@
+import { IUiSelect } from '@/@types/uikit'
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import { FC } from 'react'
 
-import { IUiSelect } from '../../../@types/uikit'
-
-const UiSelect: FC<IUiSelect> = ({ text }) => {
+const UiSelect: FC<IUiSelect> = ({ text, ArrayMenuItems, value, onChange }) => {
     return (
         <FormControl fullWidth>
             <InputLabel color="secondary">{text}</InputLabel>
             <Select
-                value={321}
+                value={value}
                 label={text}
                 color="secondary"
                 variant="outlined"
+                onChange={onChange}
             >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {ArrayMenuItems.map(({ id, value }) => (
+                    <MenuItem value={id}>{value}</MenuItem>
+                ))}
+                <MenuItem value="">
+                    <em>None</em>
+                </MenuItem>
             </Select>
         </FormControl>
     )
