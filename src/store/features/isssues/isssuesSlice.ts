@@ -26,7 +26,6 @@ export const issuesSlice = createSlice({
             state.filterByBoardId = action.payload
         },
         changeFilterSearch: (state, action: PayloadAction<string>) => {
-            console.log(action.payload)
             state.search = action.payload
         },
     },

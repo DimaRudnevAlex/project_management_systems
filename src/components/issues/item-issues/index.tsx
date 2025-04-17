@@ -1,7 +1,8 @@
 import { IIssue } from '@/@types/issues'
+import ItemLayout from '@/layouts/item-layout'
 import { tokens } from '@/theme'
 import { configPage } from '@/utils/config-page'
-import { Avatar, Box, Grid, Typography, useTheme } from '@mui/material'
+import { Avatar, Box, Typography, useTheme } from '@mui/material'
 import { FC } from 'react'
 import { Link } from 'react-router'
 
@@ -11,24 +12,14 @@ const ItemIssues: FC<{ issue: IIssue }> = ({ issue }) => {
         priority,
         status,
         boardId,
-        assignee: { avatarUrl },
+        assignee: { avatarUrl, fullName },
     } = issue
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     return (
-        <Grid
-            size={1}
-            mt={3}
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            bgcolor={colors.gray.DEFAULT}
-            borderRadius={2}
-            paddingBlock={{ xs: 1, sm: 2, md: 4 }}
-            paddingInline={1}
-        >
+        <ItemLayout>
             <Box display="flex" alignItems="center" gap={2}>
-                <Avatar alt="Remy Sharp" src={avatarUrl} />
+                <Avatar alt={fullName} src={avatarUrl} title={fullName} />
                 <Box>
                     <Typography variant="h3">{title}</Typography>
                     <Typography variant="body2">
@@ -44,7 +35,7 @@ const ItemIssues: FC<{ issue: IIssue }> = ({ issue }) => {
                     Перейти к проекту
                 </Typography>
             </Link>
-        </Grid>
+        </ItemLayout>
     )
 }
 

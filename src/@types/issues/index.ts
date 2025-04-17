@@ -23,6 +23,7 @@ export type IBoard = Pick<IIssue, 'boardId' | 'boardName'>
 export interface IListIssues {
     data: IIssue[] | undefined
     isLoading: boolean
+    isError: boolean
 }
 export interface IFilterIssues {
     boardNameList: IMenuItemToSelect[]

@@ -1,20 +1,13 @@
 import { IListIssues } from '@/@types/issues'
 import ItemIssues from '@/components/issues/item-issues'
-import SkeletonIssues from '@/components/issues/skeleton-issues'
-import { Grid } from '@mui/material'
+import ListLayout from '@/layouts/list-layout'
 import { FC } from 'react'
 
-const ListIssues: FC<IListIssues> = ({ isLoading, data }) => {
+const ListIssues: FC<IListIssues> = ({ isLoading, data, isError }) => {
     return (
-        <Grid container columns={1}>
-            {isLoading ? (
-                <SkeletonIssues />
-            ) : (
-                data?.map((issue) => (
-                    <ItemIssues issue={issue} key={issue.id} />
-                ))
-            )}
-        </Grid>
+        <ListLayout isLoading={isLoading} isError={isError}>
+            {data?.map((issue) => <ItemIssues issue={issue} key={issue.id} />)}
+        </ListLayout>
     )
 }
 
