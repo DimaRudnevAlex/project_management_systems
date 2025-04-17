@@ -4,10 +4,15 @@ import { selectIssuesByFilter } from '@/store/features/isssues/isssuesSlice.ts'
 import { useGetAllIssuesQuery } from '@/store/services/issuesApi'
 import { uniqueArrayBoardsById } from '@/utils/helper'
 import { useAppSelector } from '@/utils/hooks'
+import { useMemo } from 'react'
 
 const IssuesRoot = () => {
-    const { data, isLoading } = useGetAllIssuesQuery()
-    const boardNameList = data ? uniqueArrayBoardsById(data.data) : []
+    const { data, isLoading, isError } = useGetAllIssuesQuery()
+
+    const boardNameList = useMemo(
+        () => (data ? uniqueArrayBoardsById(data.data) : []),
+        [data],
+    )
 
     const FilteredData = useAppSelector((state) =>
         selectIssuesByFilter(state, data),
@@ -16,7 +21,11 @@ const IssuesRoot = () => {
     return (
         <>
             <FilterIssues boardNameList={boardNameList} />
-            <ListIssues data={FilteredData} isLoading={isLoading} />
+            <ListIssues
+                data={FilteredData}
+                isLoading={isLoading}
+                isError={isError}
+            />
         </>
     )
 }

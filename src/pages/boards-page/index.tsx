@@ -1,9 +1,7 @@
+import BoardsRoot from '@/components/boards'
+
 const BoardsPage = () => {
-    return (
-        <div>
-            <h1>BoardsPage</h1>
-        </div>
-    )
+    return <BoardsRoot />
 }
 
 export default BoardsPage
