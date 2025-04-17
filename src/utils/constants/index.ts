@@ -1,5 +1,4 @@
 export const issueStatus = {
-    NONE: '',
     BACKLOG: 'Backlog',
     DONE: 'Done',
     IN_PROGRESS: 'InProgress',

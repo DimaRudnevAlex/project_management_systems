@@ -7,18 +7,18 @@ const UiSelect: FC<IUiSelect> = ({ text, ArrayMenuItems, value, onChange }) => {
         <FormControl fullWidth>
             <InputLabel color="secondary">{text}</InputLabel>
             <Select
-                value={value}
+                value={value ? String(value) : ''}
                 label={text}
                 color="secondary"
                 variant="outlined"
                 onChange={onChange}
             >
-                {ArrayMenuItems.map(({ id, value }) => (
-                    <MenuItem value={id}>{value}</MenuItem>
-                ))}
                 <MenuItem value="">
                     <em>None</em>
                 </MenuItem>
+                {ArrayMenuItems.map(({ id, value }) => (
+                    <MenuItem value={String(id)}>{value}</MenuItem>
+                ))}
             </Select>
         </FormControl>
     )

@@ -1,5 +1,4 @@
 //Api
-
 export interface IApiGetIssues {
     data: IIssue[]
 }

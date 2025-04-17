@@ -1,28 +1,26 @@
 import { IFilterIssues } from '@/@types/issues'
 import UiSelect from '@/components/uikit/Select'
 import UiTextField from '@/components/uikit/TextField'
+import { selectFilterOptions } from '@/store/features/isssues/isssuesSlice.ts'
 import { tokens } from '@/theme'
 import { issueStatus } from '@/utils/constants'
-import { IssuesStatusList } from '@/utils/helper'
-import { Box, Grid, SelectChangeEvent, useTheme } from '@mui/material'
-import { FC, useMemo, useState } from 'react'
+import { issuesStatusList } from '@/utils/helper'
+import { useAppSelector, useChangeFilterOption } from '@/utils/hooks'
+import { Box, Grid, useTheme } from '@mui/material'
+import { FC, useMemo } from 'react'
 
 const FilterIssues: FC<IFilterIssues> = ({ boardNameList }) => {
+    const { handleChangeSearch, handleChangeStatus, handleChangeBoardName } =
+        useChangeFilterOption()
+
+    const { filterByBoardId, filterByStatus, search } =
+        useAppSelector(selectFilterOptions)
+
+    const ArrayIssuesStatus = useMemo(() => issuesStatusList(issueStatus), [])
+
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
 
-    const ArrayIssuesStatus = useMemo(() => IssuesStatusList(issueStatus), [])
-
-    const [status, setStatus] = useState<issueStatus>('')
-    const handleChangeStatus = (event: SelectChangeEvent) => {
-        setStatus(event.target.value as issueStatus)
-    }
-    const [boardName, setBoardName] = useState('')
-    const handleChangeBoardName = (event: SelectChangeEvent) => {
-        setBoardName(event.target.value)
-    }
-    // console.log('STATUS', status)
-    // console.log('BOARDNAME', boardName)
     return (
         <Grid
             container
@@ -41,7 +39,7 @@ const FilterIssues: FC<IFilterIssues> = ({ boardNameList }) => {
                 display="flex"
                 justifyContent={{ xs: 'center', sm: 'center', md: 'start' }}
             >
-                <UiTextField />
+                <UiTextField value={search} onChange={handleChangeSearch} />
             </Grid>
             <Grid
                 size={{ xs: 4, sm: 8, md: 8 }}
@@ -51,12 +49,12 @@ const FilterIssues: FC<IFilterIssues> = ({ boardNameList }) => {
                 <Box width={500} display="flex" gap={2}>
                     <UiSelect
                         text={'Название проекта'}
-                        value={boardName}
+                        value={filterByBoardId}
                         onChange={handleChangeBoardName}
                         ArrayMenuItems={boardNameList}
                     />
                     <UiSelect
-                        value={status}
+                        value={filterByStatus}
                         onChange={handleChangeStatus}
                         text={'Статус задачи'}
                         ArrayMenuItems={ArrayIssuesStatus}

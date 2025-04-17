@@ -1,17 +1,22 @@
 import FilterIssues from '@/components/issues/filter-issues'
 import ListIssues from '@/components/issues/list-issues'
+import { selectIssuesByFilter } from '@/store/features/isssues/isssuesSlice.ts'
 import { useGetAllIssuesQuery } from '@/store/services/issuesApi'
-import { uniqueArrayBoards } from '@/utils/helper'
+import { uniqueArrayBoardsById } from '@/utils/helper'
+import { useAppSelector } from '@/utils/hooks'
 
 const IssuesRoot = () => {
     const { data, isLoading } = useGetAllIssuesQuery()
-    const boardNameList = data ? uniqueArrayBoards(data.data) : []
-    // const FilteredData = // и тут проводить фильтрацию
+    const boardNameList = data ? uniqueArrayBoardsById(data.data) : []
+
+    const FilteredData = useAppSelector((state) =>
+        selectIssuesByFilter(state, data),
+    )
 
     return (
         <>
             <FilterIssues boardNameList={boardNameList} />
-            <ListIssues data={data?.data} isLoading={isLoading} />
+            <ListIssues data={FilteredData} isLoading={isLoading} />
         </>
     )
 }
