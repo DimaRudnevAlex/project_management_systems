@@ -1,11 +1,7 @@
-import IssuesRoot from '../../components/issues'
+import IssuesRoot from '@/components/issues'
 
 const IssuesPage = () => {
-    return (
-        <>
-            <IssuesRoot />
-        </>
-    )
+    return <IssuesRoot />
 }
 
 export default IssuesPage

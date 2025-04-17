@@ -1,9 +1,18 @@
+import { IIssue } from '@/@types/issues'
+import { tokens } from '@/theme'
+import { configPage } from '@/utils/config-page'
 import { Avatar, Box, Grid, Typography, useTheme } from '@mui/material'
+import { FC } from 'react'
 import { Link } from 'react-router'
 
-import { tokens } from '../../../theme'
-
-const ItemIssues = () => {
+const ItemIssues: FC<{ issue: IIssue }> = ({ issue }) => {
+    const {
+        title,
+        priority,
+        status,
+        boardId,
+        assignee: { avatarUrl },
+    } = issue
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
     return (
@@ -19,11 +28,21 @@ const ItemIssues = () => {
             paddingInline={1}
         >
             <Box display="flex" alignItems="center" gap={2}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                <Typography variant="h3">Название задачи #1</Typography>
+                <Avatar alt="Remy Sharp" src={avatarUrl} />
+                <Box>
+                    <Typography variant="h3">{title}</Typography>
+                    <Typography variant="body2">
+                        Приоретет: {priority} | Статус: {status}
+                    </Typography>
+                </Box>
             </Box>
-            <Link to={'/board/321'} style={{ color: `${colors.accentColor}` }}>
-                Перейти к проекту
+            <Link
+                to={configPage.LINK_TO_BOARD_BY_ID + boardId}
+                style={{ color: `${colors.accentColor}` }}
+            >
+                <Typography noWrap variant="body1">
+                    Перейти к проекту
+                </Typography>
             </Link>
         </Grid>
     )

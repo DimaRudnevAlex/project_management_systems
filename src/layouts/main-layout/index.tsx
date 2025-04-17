@@ -1,8 +1,7 @@
+import Header from '@/components/header'
+import { tokens } from '@/theme'
 import { Box, Container, useTheme } from '@mui/material'
 import { Outlet } from 'react-router'
-
-import Header from '../../components/header'
-import { tokens } from '../../theme'
 
 const MainLayout = () => {
     const theme = useTheme()
