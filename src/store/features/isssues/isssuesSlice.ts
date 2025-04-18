@@ -1,9 +1,8 @@
 import { IApiGetIssues } from '@/@types/issues'
-import { IssuesState } from '@/@types/store'
+import { createAppSelector, IssuesState } from '@/@types/store'
 import { AppState } from '@/store'
-import { issueStatus } from '@/utils/constants'
+import { ISSUE_STATUS } from '@/utils/constants'
 import { issuesListFiltered } from '@/utils/helper'
-import { createAppSelector } from '@/utils/hooks'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: IssuesState = {
@@ -16,7 +15,7 @@ export const issuesSlice = createSlice({
     name: 'issues',
     initialState,
     reducers: {
-        changeFilterByStatus: (state, action: PayloadAction<issueStatus>) => {
+        changeFilterByStatus: (state, action: PayloadAction<ISSUE_STATUS>) => {
             state.filterByStatus = action.payload
         },
         changeFilterByNameBoard: (

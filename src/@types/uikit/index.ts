@@ -12,3 +12,7 @@ export interface IUiTextField {
     value: string
     onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
+export interface IUiButton {
+    text: string
+    onClick: () => void
+}

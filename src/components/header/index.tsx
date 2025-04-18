@@ -2,11 +2,13 @@ import NavMenu from '@/components/header/nav-menu'
 import ThemeSwitcher from '@/components/theme-switcher'
 import UiButton from '@/components/uikit/Button'
 import { tokens } from '@/theme'
+import { useModal } from '@/utils/hooks'
 import { AppBar, Box, Toolbar, useTheme } from '@mui/material'
 
 const Header = () => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
+    const { handleOpenModal } = useModal()
     return (
         <Box>
             <AppBar position="static" sx={{ boxShadow: 'none' }}>
@@ -26,7 +28,10 @@ const Header = () => {
                     >
                         <NavMenu />
                         <ThemeSwitcher />
-                        <UiButton />
+                        <UiButton
+                            onClick={handleOpenModal}
+                            text="Создать задачу"
+                        />
                     </Box>
                 </Toolbar>
             </AppBar>

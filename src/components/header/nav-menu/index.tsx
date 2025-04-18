@@ -1,20 +1,20 @@
-import CustomLink from '@/components/custom-link'
+import CustomLinkNav from '@/components/custom-link-nav'
 import { configPage } from '@/utils/config-page'
 import { Box, Typography } from '@mui/material'
 
 const NavMenu = () => {
     return (
         <Box component="nav" display="flex" gap={3} flexDirection="row">
-            <CustomLink to={configPage.ISSUES}>
+            <CustomLinkNav to={configPage.ISSUES}>
                 <Typography variant="h5" fontSize={{ xs: 14, sm: 18, md: 24 }}>
                     Все задачи
                 </Typography>
-            </CustomLink>
-            <CustomLink to={configPage.BOARDS}>
-                <Typography fontSize={{ xs: 14, sm: 18, md: 24 }} variant="h5">
+            </CustomLinkNav>
+            <CustomLinkNav to={configPage.BOARDS}>
+                <Typography variant="h5" fontSize={{ xs: 14, sm: 18, md: 24 }}>
                     Проекты
                 </Typography>
-            </CustomLink>
+            </CustomLinkNav>
         </Box>
     )
 }

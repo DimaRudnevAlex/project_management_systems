@@ -1,13 +1,13 @@
 import { IFilterIssues } from '@/@types/issues'
+import { useAppSelector } from '@/@types/store'
 import UiSelect from '@/components/uikit/Select'
 import UiTextField from '@/components/uikit/TextField'
 import { selectFilterOptions } from '@/store/features/isssues/isssuesSlice.ts'
 import { tokens } from '@/theme'
-import { issueStatus } from '@/utils/constants'
-import { issuesStatusList } from '@/utils/helper'
-import { useAppSelector, useChangeFilterOption } from '@/utils/hooks'
+import { LIST_ISSUE_STATUS } from '@/utils/constants'
+import { useChangeFilterOption } from '@/utils/hooks'
 import { Box, Grid, useTheme } from '@mui/material'
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 
 const FilterIssues: FC<IFilterIssues> = ({ boardNameList }) => {
     const { handleChangeSearch, handleChangeStatus, handleChangeBoardName } =
@@ -15,8 +15,6 @@ const FilterIssues: FC<IFilterIssues> = ({ boardNameList }) => {
 
     const { filterByBoardId, filterByStatus, search } =
         useAppSelector(selectFilterOptions)
-
-    const ArrayIssuesStatus = useMemo(() => issuesStatusList(issueStatus), [])
 
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
@@ -57,7 +55,7 @@ const FilterIssues: FC<IFilterIssues> = ({ boardNameList }) => {
                         value={filterByStatus}
                         onChange={handleChangeStatus}
                         text={'Статус задачи'}
-                        ArrayMenuItems={ArrayIssuesStatus}
+                        ArrayMenuItems={LIST_ISSUE_STATUS}
                     />
                 </Box>
             </Grid>

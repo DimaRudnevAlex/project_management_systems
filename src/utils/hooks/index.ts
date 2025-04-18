@@ -1,23 +1,18 @@
-import { AppDispatch, AppState } from '@/store'
+import { IModalContext } from '@/@types/context'
+import { useAppDispatch } from '@/@types/store'
 import {
     changeFilterByNameBoard,
     changeFilterByStatus,
     changeFilterSearch,
 } from '@/store/features/isssues/isssuesSlice.ts'
-import { issueStatus } from '@/utils/constants'
+import { ISSUE_STATUS } from '@/utils/constants'
 import { SelectChangeEvent } from '@mui/material'
-import { createSelector } from '@reduxjs/toolkit'
-import { ChangeEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
-export const useAppSelector = useSelector.withTypes<AppState>()
-export const createAppSelector = createSelector.withTypes<AppState>()
+import { ChangeEvent, createContext, useContext } from 'react'
 
 export const useChangeFilterOption = () => {
     const dispatch = useAppDispatch()
     const handleChangeStatus = (event: SelectChangeEvent) => {
-        dispatch(changeFilterByStatus(event.target.value as issueStatus))
+        dispatch(changeFilterByStatus(event.target.value as ISSUE_STATUS))
     }
     const handleChangeBoardName = (event: SelectChangeEvent) => {
         dispatch(
@@ -31,3 +26,7 @@ export const useChangeFilterOption = () => {
     }
     return { handleChangeStatus, handleChangeBoardName, handleChangeSearch }
 }
+
+export const ModalContext = createContext<IModalContext | null>(null)
+
+export const useModal = () => useContext(ModalContext)!
