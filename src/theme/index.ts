@@ -1,3 +1,4 @@
+import { IColorModeContext } from '@/@types/context'
 import { ThemeSettings, Tokens } from '@/@types/theme'
 import { createTheme, Theme } from '@mui/material'
 import { createContext, useContext, useState } from 'react'
@@ -84,15 +85,17 @@ export const themeSettings = (mode: 'light' | 'dark'): ThemeSettings => {
     }
 }
 
-export const ColorModeContext = createContext<(() => void) | null>(null)
+export const ColorModeContext = createContext<IColorModeContext | null>(null)
 
 export const useColorMode = () => useContext(ColorModeContext)
 
-export const useMode = (): [() => void, Theme] => {
+export const useMode = (): [IColorModeContext, Theme] => {
     const [mode, setMode] = useState<'light' | 'dark'>('dark')
 
-    const colorMode = () =>
-        setMode((prev) => (prev === 'dark' ? 'light' : 'dark'))
+    const colorMode = {
+        toggleMode: () =>
+            setMode((prev) => (prev === 'dark' ? 'light' : 'dark')),
+    }
 
     const theme = createTheme(themeSettings(mode))
 

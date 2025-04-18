@@ -8,7 +8,7 @@ const ThemeSwitcher = () => {
     const colorMode = useColorMode()!
 
     return (
-        <IconButton onClick={() => colorMode()}>
+        <IconButton onClick={colorMode.toggleMode}>
             {theme.palette.mode === 'dark' ? (
                 <DarkModeIcon />
             ) : (

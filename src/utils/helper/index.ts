@@ -11,7 +11,7 @@ export const uniqueArrayBoardsById = (arr: IBoard[]) => {
     return Array.from(map.values())
 }
 
-export const issuesStatusList = (statuses: {
+export const ArrayFromObjIssuesStatus = (statuses: {
     [key: string]: string
 }): IMenuItemToSelect[] => {
     return Object.values(statuses).map((status) => ({
@@ -44,4 +44,18 @@ export const issuesListFiltered = (
         }
         return false
     })
+}
+
+export const createContainer = (options: {
+    id: string
+    mountNode?: HTMLElement
+}) => {
+    if (document.getElementById(options.id)) return
+
+    const { id, mountNode = document.body } = options
+
+    const portalContainer = document.createElement('div')
+
+    portalContainer.setAttribute('id', id)
+    mountNode.prepend(portalContainer)
 }

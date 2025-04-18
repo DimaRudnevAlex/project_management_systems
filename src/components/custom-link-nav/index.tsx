@@ -4,9 +4,10 @@ import { useTheme } from '@mui/material'
 import { FC } from 'react'
 import { Link, useMatch } from 'react-router'
 
-const CustomLink: FC<ICustomLink> = ({ children, to }) => {
+const CustomLinkNav: FC<ICustomLink> = ({ children, to }) => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
+
     const match = useMatch({
         path: to,
         end: to.length === 1,
@@ -30,4 +31,4 @@ const CustomLink: FC<ICustomLink> = ({ children, to }) => {
     )
 }
 
-export default CustomLink
+export default CustomLinkNav
