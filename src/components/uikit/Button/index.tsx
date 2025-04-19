@@ -3,13 +3,18 @@ import { tokens } from '@/theme'
 import { Button, useTheme } from '@mui/material'
 import { FC } from 'react'
 
-const UiButton: FC<IUiButton> = ({ onClick, text }) => {
+const UiButton: FC<IUiButton> = ({
+    onClick = undefined,
+    text,
+    type = 'button',
+}) => {
     const theme = useTheme()
     const colors = tokens(theme.palette.mode)
 
     return (
         <Button
             onClick={onClick}
+            type={type}
             sx={{
                 color: `${colors.accentColor}`,
                 borderColor: `${colors.accentColor}`,
