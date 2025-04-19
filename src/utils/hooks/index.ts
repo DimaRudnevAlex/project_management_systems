@@ -1,5 +1,4 @@
 import { IModalContext } from '@/@types/context'
-import { GetOneIssue } from '@/@types/issues'
 import { useAppDispatch } from '@/@types/store'
 import {
     changeFilterByNameBoard,
@@ -31,26 +30,3 @@ export const useChangeFilterOption = () => {
 export const ModalContext = createContext<IModalContext | null>(null)
 
 export const useModal = () => useContext(ModalContext)!
-
-export const defaultValueForModal = (
-    data: GetOneIssue | undefined,
-    ArrayMenuItemsBoards: { id: any; value: any }[],
-) => {
-    if (!data || !ArrayMenuItemsBoards.length) {
-        return {
-            assigneeId: '',
-            priority: '',
-            status: '',
-            description: '',
-            boardId: '',
-            title: '',
-        }
-    }
-    return {
-        ...data,
-        assigneeId: String(data?.assignee.id),
-        boardId: ArrayMenuItemsBoards.find(
-            (item) => item.value === data.boardName,
-        )?.id,
-    }
-}

@@ -32,7 +32,7 @@ const ModalSelect: FC<IFormSelect> = ({
                             <MenuItem value={''}>
                                 <em>None</em>
                             </MenuItem>
-                            {menuItems.map(({ value, id }) => (
+                            {menuItems?.map(({ value, id }) => (
                                 <MenuItem value={String(id)}>{value}</MenuItem>
                             ))}
                         </Select>

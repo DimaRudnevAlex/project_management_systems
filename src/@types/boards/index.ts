@@ -1,6 +1,9 @@
 //Api
+import { IMenuItemToSelect } from '@/@types/issues'
+
 export interface IApiGetBoards {
     data: IBoard[]
+    menuItem: IMenuItemToSelect[]
 }
 
 export interface IBoard {

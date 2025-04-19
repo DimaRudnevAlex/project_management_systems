@@ -11,7 +11,7 @@ export interface IFormData {
 }
 export interface IFormSelect {
     menuItems: IMenuItemToSelect[]
-    control: Control<IFormData, any, IFormData>
+    control: Control<IFormData>
     label: string
     name: keyof IFormData
     disabled?: boolean
