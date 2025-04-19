@@ -30,7 +30,6 @@ export interface IUsers extends IAssignee {
     teamName: string
     tasksCount: number
 }
-export type UserData = Pick<IAssignee, 'id' | 'fullName'>
 export type IBoard = Pick<IIssue, 'boardId' | 'boardName'>
 
 // При запросе информации об одной задаче нет данных об boardId, только boardName(

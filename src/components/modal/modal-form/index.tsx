@@ -6,14 +6,15 @@ import {
     clearConfigForModal,
     selectIssueIdConfigForModal,
 } from '@/store/features/cofig-for-modal'
-import { useGetAllBoardsQuery } from '@/store/services/boardsApi'
+import { boardsApi, useGetAllBoardsQuery } from '@/store/services/boardsApi'
 import {
+    useAddNewIssueOrUpdateIssueMutation,
     useGetAllUsersQuery,
     useGetIssueByIdQuery,
 } from '@/store/services/issuesApi'
 import { configPage } from '@/utils/config-page'
 import { LIST_ISSUE_STATUS, LIST_PRIORITIES } from '@/utils/constants'
-import { defaultValueForModal } from '@/utils/helper'
+import { createBodyFromRequest, defaultValueForModal } from '@/utils/helper'
 import { useModal } from '@/utils/hooks'
 import { Box, TextField, Typography } from '@mui/material'
 import { skipToken } from '@reduxjs/toolkit/query'
@@ -24,13 +25,17 @@ const ModalForm = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const { handleCloseModal } = useModal()
+
+    const [createOrUpdateIssue, { isLoading }] =
+        useAddNewIssueOrUpdateIssueMutation()
     const { issueId, boardId } = useAppSelector(selectIssueIdConfigForModal)
-    const { data: boardsData, isLoading: isSuccessMenuBoards } =
+    const { data: MenuItemBoards, isLoading: isSuccessMenuBoards } =
         useGetAllBoardsQuery()
-    const { data: ArrayMenuItemsUsers, isLoading: isSuccessMenuUsers } =
+    const { data: MenuItemUsers, isLoading: isSuccessMenuUsers } =
         useGetAllUsersQuery()
     const { data: dataCurrentIssue, isLoading: isSuccessCurrentIssue } =
         useGetIssueByIdQuery(issueId ?? skipToken)
+
     const {
         control,
         register,
@@ -38,18 +43,31 @@ const ModalForm = () => {
         handleSubmit,
     } = useForm<IFormData>()
 
+    if (isSuccessMenuBoards || isSuccessMenuUsers || isSuccessCurrentIssue) {
+        return <h1>Loading...</h1>
+    }
+    const handleSubmitForm = async (formData: IFormData) => {
+        //TODO обработать ошибки  body: { some: 'fds' }
+        try {
+            await createOrUpdateIssue(
+                createBodyFromRequest(issueId, formData),
+            ).unwrap()
+        } catch (e: any) {
+            alert(`Не удалось отправить данные ( ${e?.data?.message}`)
+        } finally {
+            handleCloseModal()
+            //TODO Иногда не отрабатывает(хотя делаю одно и тоже), надо разобраться
+            dispatch(boardsApi.util.resetApiState())
+            dispatch(clearConfigForModal())
+        }
+    }
+
     const handleClickToBoard = () => {
         handleCloseModal()
         dispatch(clearConfigForModal())
         navigate(`${configPage.LINK_TO_BOARD_BY_ID}${boardId}`)
     }
-    const handleSubmitForm = async (data: IFormData) => {
-        console.log(data)
-    }
 
-    if (isSuccessMenuBoards || isSuccessMenuUsers || isSuccessCurrentIssue) {
-        return <h1>Loading...</h1>
-    }
     const defaultValue = defaultValueForModal(dataCurrentIssue, boardId)
 
     return (
@@ -95,7 +113,7 @@ const ModalForm = () => {
                     label={'Проект'}
                     name={'boardId'}
                     control={control}
-                    menuItems={boardsData!.menuItem}
+                    menuItems={MenuItemBoards?.menuItem ?? []}
                 />
                 <ModalSelect
                     defaultValue={defaultValue.priority}
@@ -112,14 +130,18 @@ const ModalForm = () => {
                     menuItems={LIST_ISSUE_STATUS}
                 />
                 <ModalSelect
-                    defaultValue={defaultValue.assigneeId}
+                    defaultValue={defaultValue.assignee.id}
                     label={'Исполнитель'}
                     name={'assigneeId'}
                     control={control}
-                    menuItems={ArrayMenuItemsUsers!}
+                    menuItems={MenuItemUsers ?? []}
                 />
                 <Box display={'flex'} justifyContent={'space-between'}>
-                    <UiButton type="submit" text={'Создать задачу'} />
+                    <UiButton
+                        loading={isLoading}
+                        type="submit"
+                        text={`${issueId ? 'Обновить' : 'Создать'} задачу`}
+                    />
                     {boardId && (
                         <UiButton
                             text="Перейти к доске"

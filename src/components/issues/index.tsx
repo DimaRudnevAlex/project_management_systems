@@ -8,7 +8,7 @@ import { useMemo } from 'react'
 
 const IssuesRoot = () => {
     const { data, isLoading, isError } = useGetAllIssuesQuery()
-
+    // TODO выексти в RTK
     const boardNameList = useMemo(
         () => (data ? uniqueArrayBoardsById(data.data) : []),
         [data],

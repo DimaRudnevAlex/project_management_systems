@@ -5,6 +5,7 @@ export const boardsApi = createApi({
     reducerPath: 'boardsApi',
     baseQuery: fetchBaseQuery({
         // Я добавил API_URL в .env, но на всякий случай оставлю так, хотя понимаю что личный данные лучше не кидать в гитхаб
+        // Но забыл добавть в .gitignore
         baseUrl: import.meta.env.VITE_API_URL ?? 'http://localhost:8080/api/v1',
         headers: { accept: 'application/json' },
     }),

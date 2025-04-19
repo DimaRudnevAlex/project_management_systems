@@ -10,7 +10,9 @@ const ItemLayout: FC<{ children: ReactNode }> = ({ children }) => {
             size={1}
             mt={3}
             display="flex"
+            flexDirection={{ xs: 'column', md: 'row' }}
             alignItems="center"
+            gap={1}
             justifyContent="space-between"
             bgcolor={colors.gray.DEFAULT}
             borderRadius={2}

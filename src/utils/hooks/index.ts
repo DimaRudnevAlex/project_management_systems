@@ -11,6 +11,7 @@ import { ChangeEvent, createContext, useContext } from 'react'
 
 export const useChangeFilterOption = () => {
     const dispatch = useAppDispatch()
+
     const handleChangeStatus = (event: SelectChangeEvent) => {
         dispatch(changeFilterByStatus(event.target.value as ISSUE_STATUS))
     }

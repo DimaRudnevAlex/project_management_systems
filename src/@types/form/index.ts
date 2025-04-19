@@ -15,5 +15,5 @@ export interface IFormSelect {
     label: string
     name: keyof IFormData
     disabled?: boolean
-    defaultValue?: string
+    defaultValue?: string | number
 }
