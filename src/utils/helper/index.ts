@@ -1,3 +1,4 @@
+import { IFormData } from '@/@types/form'
 import { GetOneIssue, IBoard, IIssue, IMenuItemToSelect } from '@/@types/issues'
 import { IssuesState } from '@/@types/store'
 
@@ -66,7 +67,9 @@ export const defaultValueForModal = (
 ) => {
     if (!data || !boardId) {
         return {
-            assigneeId: '',
+            assignee: {
+                id: '',
+            },
             priority: '',
             status: '',
             description: '',
@@ -76,7 +79,30 @@ export const defaultValueForModal = (
     }
     return {
         ...data,
-        assigneeId: String(data?.assignee.id),
         boardId,
     }
+}
+
+export const createBodyFromRequest = (
+    issueId: number | null,
+    formData: IFormData,
+) => {
+    if (!issueId) {
+        const body = {
+            assigneeId: +formData.assigneeId,
+            boardId: +formData.boardId,
+            description: formData.description,
+            priority: formData.priority,
+            title: formData.title,
+        }
+        return { issueId, body }
+    }
+    const body = {
+        assigneeId: +formData.assigneeId,
+        description: formData.description,
+        priority: formData.priority,
+        status: formData.status,
+        title: formData.title,
+    }
+    return { issueId, body }
 }

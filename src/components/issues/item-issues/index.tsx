@@ -26,7 +26,7 @@ const ItemIssues: FC<{ issue: IIssue }> = ({ issue }) => {
 
     return (
         <ItemLayout>
-            <Box display="flex" alignItems="center" gap={2}>
+            <Box display="flex" alignItems="center" gap={2} alignSelf="start">
                 <Avatar alt={fullName} src={avatarUrl} title={fullName} />
                 <Box>
                     <Typography variant="h3">{title}</Typography>

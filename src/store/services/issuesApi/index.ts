@@ -11,12 +11,15 @@ export const issuesApi = createApi({
     reducerPath: 'issuesApi',
     baseQuery: fetchBaseQuery({
         // Я добавил API_URL в .env, но на всякий случай оставлю так, хотя понимаю что личный данные лучше не кидать в гитхаб
+        // Но забыл добавть в .gitignore
         baseUrl: import.meta.env.VITE_API_URL ?? 'http://localhost:8080/api/v1',
         headers: { accept: 'application/json' },
     }),
+    tagTypes: ['Issue'],
     endpoints: (builder) => ({
         getAllIssues: builder.query<IApiGetIssues, void>({
             query: () => '/tasks',
+            providesTags: ['Issue'],
         }),
         getAllUsers: builder.query<IMenuItemToSelect[], void>({
             query: () => '/users',
@@ -32,16 +35,28 @@ export const issuesApi = createApi({
         getIssueById: builder.query<GetOneIssue, number>({
             query: (id) => `/tasks/${id}`,
             transformResponse: (response: IApiOneGetIssue): GetOneIssue => {
+                return response.data
+            },
+            providesTags: ['Issue'],
+        }),
+        //TODO invalid and types
+        addNewIssueOrUpdateIssue: builder.mutation({
+            query: ({ issueId, body }) => {
+                if (issueId)
+                    return {
+                        url: `/tasks/update/${issueId}`,
+                        headers: { 'Content-Type': 'application/json' },
+                        method: 'PUT',
+                        body: JSON.stringify(body),
+                    }
                 return {
-                    id: response.data.id,
-                    assignee: response.data.assignee,
-                    boardName: response.data.boardName,
-                    description: response.data.description,
-                    priority: response.data.priority,
-                    title: response.data.title,
-                    status: response.data.status,
+                    url: `/tasks/create`,
+                    headers: { 'Content-Type': 'application/json' },
+                    method: 'POST',
+                    body: JSON.stringify(body),
                 }
             },
+            invalidatesTags: ['Issue'],
         }),
     }),
 })
@@ -50,4 +65,5 @@ export const {
     useGetAllIssuesQuery,
     useGetAllUsersQuery,
     useGetIssueByIdQuery,
+    useAddNewIssueOrUpdateIssueMutation,
 } = issuesApi

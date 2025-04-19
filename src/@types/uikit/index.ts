@@ -18,4 +18,5 @@ export interface IUiButton {
     text: string
     onClick?: () => void
     type?: 'button' | 'submit' | 'reset'
+    loading?: boolean
 }

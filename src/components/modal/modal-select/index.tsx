@@ -24,7 +24,7 @@ const ModalSelect: FC<IFormSelect> = ({
                 disabled={disabled}
                 name={name}
                 control={control}
-                defaultValue={defaultValue}
+                defaultValue={String(defaultValue)}
                 rules={{ required: 'Это обязательное поле' }}
                 render={({ field, fieldState }) => (
                     <>
