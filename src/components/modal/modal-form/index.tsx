@@ -47,13 +47,14 @@ const ModalForm = () => {
         return <h1>Loading...</h1>
     }
     const handleSubmitForm = async (formData: IFormData) => {
-        //TODO обработать ошибки  body: { some: 'fds' }
+        //TODO обработать ошибки:1) Получить ошибку при submit формы подставте в функцию createOrUpdateIssue аргументом: { issueId , body: { something: 'error' }}
+        //TODO                   2) Получить успех при submit формы подставте в функцию createOrUpdateIssue аргументом: createBodyFromRequest(issueId, formData)
         try {
             await createOrUpdateIssue(
                 createBodyFromRequest(issueId, formData),
             ).unwrap()
         } catch (e: any) {
-            alert(`Не удалось отправить данные ( ${e?.data?.message}`)
+            console.error(`Не удалось отправить данные ( ${e?.data?.message}`)
         } finally {
             handleCloseModal()
             //TODO Иногда не отрабатывает(хотя делаю одно и тоже), надо разобраться
