@@ -1,43 +1,36 @@
 import { IFormData } from '@/@types/form'
-import { useAppSelector } from '@/@types/store'
+import { useAppDispatch, useAppSelector } from '@/@types/store'
 import ModalSelect from '@/components/modal/modal-select'
 import UiButton from '@/components/uikit/Button'
-import { selectIssueIdConfigForModal } from '@/store/features/cofig-for-modal'
+import {
+    clearConfigForModal,
+    selectIssueIdConfigForModal,
+} from '@/store/features/cofig-for-modal'
 import { useGetAllBoardsQuery } from '@/store/services/boardsApi'
 import {
     useGetAllUsersQuery,
     useGetIssueByIdQuery,
 } from '@/store/services/issuesApi'
-import { tokens } from '@/theme'
 import { configPage } from '@/utils/config-page'
 import { LIST_ISSUE_STATUS, LIST_PRIORITIES } from '@/utils/constants'
-import { correctionArrayData } from '@/utils/helper'
-import { defaultValueForModal } from '@/utils/hooks'
-import { Box, TextField, Typography, useTheme } from '@mui/material'
+import { defaultValueForModal } from '@/utils/helper'
+import { useModal } from '@/utils/hooks'
+import { Box, TextField, Typography } from '@mui/material'
 import { skipToken } from '@reduxjs/toolkit/query'
-import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router'
+import { useNavigate } from 'react-router'
 
 const ModalForm = () => {
-    const issueId = useAppSelector(selectIssueIdConfigForModal)
-    const { data: boards, isLoading: isLoading1 } = useGetAllBoardsQuery()
-    const { data: users, isLoading: isLoading2 } = useGetAllUsersQuery()
-    const { data: dataCurrentIssue, isLoading: isLoading3 } =
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+    const { handleCloseModal } = useModal()
+    const { issueId, boardId } = useAppSelector(selectIssueIdConfigForModal)
+    const { data: boardsData, isLoading: isSuccessMenuBoards } =
+        useGetAllBoardsQuery()
+    const { data: ArrayMenuItemsUsers, isLoading: isSuccessMenuUsers } =
+        useGetAllUsersQuery()
+    const { data: dataCurrentIssue, isLoading: isSuccessCurrentIssue } =
         useGetIssueByIdQuery(issueId ?? skipToken)
-
-    const ArrayMenuItemsBoards = useMemo(() => {
-        return boards ? correctionArrayData(boards.data, 'id', 'name') : []
-    }, [boards])
-
-    const ArrayMenuItemsUsers = useMemo(() => {
-        return users ? correctionArrayData(users, 'id', 'fullName') : []
-    }, [users])
-
-    const defaultValue = defaultValueForModal(
-        dataCurrentIssue,
-        ArrayMenuItemsBoards,
-    )
     const {
         control,
         register,
@@ -45,13 +38,19 @@ const ModalForm = () => {
         handleSubmit,
     } = useForm<IFormData>()
 
+    const handleClickToBoard = () => {
+        handleCloseModal()
+        dispatch(clearConfigForModal())
+        navigate(`${configPage.LINK_TO_BOARD_BY_ID}${boardId}`)
+    }
     const handleSubmitForm = async (data: IFormData) => {
         console.log(data)
     }
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
 
-    if (!(!isLoading1 && !isLoading2 && !isLoading3)) return <h1>Loading...</h1>
+    if (isSuccessMenuBoards || isSuccessMenuUsers || isSuccessCurrentIssue) {
+        return <h1>Loading...</h1>
+    }
+    const defaultValue = defaultValueForModal(dataCurrentIssue, boardId)
 
     return (
         <form onSubmit={handleSubmit(handleSubmitForm)}>
@@ -61,7 +60,7 @@ const ModalForm = () => {
                 gap={{ sm: 2, md: 3, xs: 1 }}
             >
                 <Typography variant="h6" component="h2">
-                    Создание задачи
+                    {boardId ? 'Редактирование' : 'Создание'} задачи
                 </Typography>
                 <TextField
                     defaultValue={defaultValue.title}
@@ -96,7 +95,7 @@ const ModalForm = () => {
                     label={'Проект'}
                     name={'boardId'}
                     control={control}
-                    menuItems={ArrayMenuItemsBoards}
+                    menuItems={boardsData!.menuItem}
                 />
                 <ModalSelect
                     defaultValue={defaultValue.priority}
@@ -117,19 +116,15 @@ const ModalForm = () => {
                     label={'Исполнитель'}
                     name={'assigneeId'}
                     control={control}
-                    menuItems={ArrayMenuItemsUsers}
+                    menuItems={ArrayMenuItemsUsers!}
                 />
                 <Box display={'flex'} justifyContent={'space-between'}>
                     <UiButton type="submit" text={'Создать задачу'} />
-                    {issueId && (
-                        <Link
-                            to={`${configPage.LINK_TO_BOARD_BY_ID}${issueId}`}
-                            style={{ color: `${colors.accentColor}` }}
-                        >
-                            <Typography noWrap variant="body1">
-                                Перейти к проекту
-                            </Typography>
-                        </Link>
+                    {boardId && (
+                        <UiButton
+                            text="Перейти к доске"
+                            onClick={handleClickToBoard}
+                        />
                     )}
                 </Box>
             </Box>

@@ -1,4 +1,4 @@
-import { IBoard, IIssue, IMenuItemToSelect } from '@/@types/issues'
+import { GetOneIssue, IBoard, IIssue, IMenuItemToSelect } from '@/@types/issues'
 import { IssuesState } from '@/@types/store'
 
 export const uniqueArrayBoardsById = (arr: IBoard[]) => {
@@ -59,25 +59,24 @@ export const createContainer = (options: {
     portalContainer.setAttribute('id', id)
     mountNode.prepend(portalContainer)
 }
-interface Item {
-    [key: string]: any
-}
 
-export const correctionArrayData = <T extends Item>(
-    array: T[],
-    key1: string,
-    key2: string,
+export const defaultValueForModal = (
+    data: GetOneIssue | undefined,
+    boardId: number | null,
 ) => {
-    return array.map((item) => {
-        if (item[key1] && item[key2]) {
-            return {
-                id: item[key1],
-                value: item[key2],
-            }
-        }
+    if (!data || !boardId) {
         return {
-            id: null,
-            value: null,
+            assigneeId: '',
+            priority: '',
+            status: '',
+            description: '',
+            boardId: '',
+            title: '',
         }
-    })
+    }
+    return {
+        ...data,
+        assigneeId: String(data?.assignee.id),
+        boardId,
+    }
 }

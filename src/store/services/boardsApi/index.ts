@@ -11,6 +11,17 @@ export const boardsApi = createApi({
     endpoints: (builder) => ({
         getAllBoards: builder.query<IApiGetBoards, void>({
             query: () => '/boards',
+            transformResponse: (
+                response: Pick<IApiGetBoards, 'data'>,
+            ): IApiGetBoards => {
+                return {
+                    data: response.data,
+                    menuItem: response.data.map((item) => ({
+                        id: item.id,
+                        value: item.name,
+                    })),
+                }
+            },
         }),
     }),
 })

@@ -14,12 +14,13 @@ const ItemIssues: FC<{ issue: IIssue }> = ({ issue }) => {
         status,
         assignee: { avatarUrl, fullName },
         id,
+        boardId,
     } = issue
     const dispatch = useAppDispatch()
     const { handleOpenModal } = useModal()
 
-    const editIssue = (issueId: number) => {
-        dispatch(changeIssueIdForEdit(issueId))
+    const editIssue = (issueId: number, boardId: number) => {
+        dispatch(changeIssueIdForEdit({ issueId, boardId }))
         handleOpenModal()
     }
 
@@ -34,7 +35,10 @@ const ItemIssues: FC<{ issue: IIssue }> = ({ issue }) => {
                     </Typography>
                 </Box>
             </Box>
-            <UiButton text="Редактировать" onClick={() => editIssue(id)} />
+            <UiButton
+                text="Редактировать"
+                onClick={() => editIssue(id, boardId)}
+            />
         </ItemLayout>
     )
 }

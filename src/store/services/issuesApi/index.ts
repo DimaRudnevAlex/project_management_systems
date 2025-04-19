@@ -3,7 +3,7 @@ import {
     IApiGetIssues,
     IApiGetUsers,
     IApiOneGetIssue,
-    UserData,
+    IMenuItemToSelect,
 } from '@/@types/issues'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
@@ -18,12 +18,14 @@ export const issuesApi = createApi({
         getAllIssues: builder.query<IApiGetIssues, void>({
             query: () => '/tasks',
         }),
-        getAllUsers: builder.query<UserData[], void>({
+        getAllUsers: builder.query<IMenuItemToSelect[], void>({
             query: () => '/users',
-            transformResponse: (response: IApiGetUsers): UserData[] => {
-                return response.data.map(({ id, fullName }) => ({
-                    id,
-                    fullName,
+            transformResponse: (
+                response: IApiGetUsers,
+            ): IMenuItemToSelect[] => {
+                return response.data.map((item) => ({
+                    id: item.id,
+                    value: item.fullName,
                 }))
             },
         }),
