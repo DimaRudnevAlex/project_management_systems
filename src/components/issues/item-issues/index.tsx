@@ -1,21 +1,28 @@
 import { IIssue } from '@/@types/issues'
+import { useAppDispatch } from '@/@types/store'
+import UiButton from '@/components/uikit/Button'
 import ItemLayout from '@/layouts/item-layout'
-import { tokens } from '@/theme'
-import { configPage } from '@/utils/config-page'
-import { Avatar, Box, Typography, useTheme } from '@mui/material'
+import { changeIssueIdForEdit } from '@/store/features/cofig-for-modal'
+import { useModal } from '@/utils/hooks'
+import { Avatar, Box, Typography } from '@mui/material'
 import { FC } from 'react'
-import { Link } from 'react-router'
 
 const ItemIssues: FC<{ issue: IIssue }> = ({ issue }) => {
     const {
         title,
         priority,
         status,
-        boardId,
         assignee: { avatarUrl, fullName },
+        id,
     } = issue
-    const theme = useTheme()
-    const colors = tokens(theme.palette.mode)
+    const dispatch = useAppDispatch()
+    const { handleOpenModal } = useModal()
+
+    const editIssue = (issueId: number) => {
+        dispatch(changeIssueIdForEdit(issueId))
+        handleOpenModal()
+    }
+
     return (
         <ItemLayout>
             <Box display="flex" alignItems="center" gap={2}>
@@ -27,14 +34,7 @@ const ItemIssues: FC<{ issue: IIssue }> = ({ issue }) => {
                     </Typography>
                 </Box>
             </Box>
-            <Link
-                to={configPage.LINK_TO_BOARD_BY_ID + boardId}
-                style={{ color: `${colors.accentColor}` }}
-            >
-                <Typography noWrap variant="body1">
-                    Перейти к проекту
-                </Typography>
-            </Link>
+            <UiButton text="Редактировать" onClick={() => editIssue(id)} />
         </ItemLayout>
     )
 }

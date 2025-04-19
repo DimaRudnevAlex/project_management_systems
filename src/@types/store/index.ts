@@ -12,3 +12,7 @@ export interface IssuesState {
     filterByBoardId: number | null
     filterByStatus: ISSUE_STATUS | ''
 }
+
+export interface ConfigForModal {
+    issueId: number | null
+}
