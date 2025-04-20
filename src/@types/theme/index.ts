@@ -16,6 +16,7 @@ export interface Tokens {
     }
     borderColor: string
     accentColor: string
+    card: string
 }
 
 export interface ThemeSettings {

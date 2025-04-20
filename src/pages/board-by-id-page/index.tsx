@@ -1,12 +1,7 @@
-import { useParams } from 'react-router'
+import SingleBoard from '@/components/boards/single-board'
 
 const BoardByIdPage = () => {
-    const { id } = useParams()
-    return (
-        <div>
-            <h1>BoardByIdPage {id}</h1>
-        </div>
-    )
+    return <SingleBoard />
 }
 
 export default BoardByIdPage

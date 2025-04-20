@@ -23,6 +23,7 @@ export const tokens = (mode: 'light' | 'dark'): Tokens => ({
               },
               borderColor: '#545454',
               accentColor: '#796fc2',
+              card: '#706f6f',
           }
         : {
               white: {
@@ -42,6 +43,7 @@ export const tokens = (mode: 'light' | 'dark'): Tokens => ({
               },
               accentColor: '#796fc2',
               borderColor: '#3f3f3f',
+              card: '#a8a6a6',
           }),
 })
 

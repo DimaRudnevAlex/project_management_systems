@@ -10,8 +10,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const issuesApi = createApi({
     reducerPath: 'issuesApi',
     baseQuery: fetchBaseQuery({
-        // Я добавил API_URL в .env, но на всякий случай оставлю так, хотя понимаю что личный данные лучше не кидать в гитхаб
-        // Но забыл добавть в .gitignore
+        // Я добавил API_URL в .env, но на всякий случай оставлю так, хотя понимаю что личные данные лучше не кидать в гит-хаб
+        // Но забыл добавить в .gitignore(
         baseUrl: import.meta.env.VITE_API_URL ?? 'http://localhost:8080/api/v1',
         headers: { accept: 'application/json' },
     }),
@@ -39,7 +39,6 @@ export const issuesApi = createApi({
             },
             providesTags: ['Issue'],
         }),
-        //TODO invalid and types
         addNewIssueOrUpdateIssue: builder.mutation({
             query: ({ issueId, body }) => {
                 if (issueId)

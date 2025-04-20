@@ -1,6 +1,7 @@
 import { ConfigForModal } from '@/@types/store'
 import { AppState } from '@/store'
 import { AppStartListening } from '@/store/listener-middleware'
+import { boardsApi } from '@/store/services/boardsApi'
 import { issuesApi } from '@/store/services/issuesApi'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
@@ -57,6 +58,21 @@ export const addOrUpdateIssue = (startAppListening: AppStartListening) => {
             const { toast } = await import('react-tiny-toast')
 
             const toastId = toast.show('Ошибка!', {
+                variant: 'danger',
+                position: 'top-center',
+                pause: true,
+            })
+
+            await listenerApi.delay(5000)
+            toast.remove(toastId)
+        },
+    })
+    startAppListening({
+        matcher: boardsApi.endpoints.updateStatusDrag.matchRejected,
+        effect: async (_action, listenerApi) => {
+            const { toast } = await import('react-tiny-toast')
+
+            const toastId = toast.show('Не удалось обновить статус!', {
                 variant: 'danger',
                 position: 'top-center',
                 pause: true,
