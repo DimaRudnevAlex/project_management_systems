@@ -4,6 +4,10 @@ import { ISSUE_STATUS } from '@/utils/constants'
 export interface IApiGetIssues {
     data: IIssue[]
 }
+export interface IApiResponseIssues {
+    data: IIssue[]
+    boardNameList: IMenuItemToSelect[]
+}
 export interface IApiGetUsers {
     data: IUsers[]
 }

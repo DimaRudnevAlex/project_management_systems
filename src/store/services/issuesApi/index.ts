@@ -3,8 +3,10 @@ import {
     IApiGetIssues,
     IApiGetUsers,
     IApiOneGetIssue,
+    IApiResponseIssues,
     IMenuItemToSelect,
 } from '@/@types/issues'
+import { uniqueArrayBoardsById } from '@/utils/helper'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const issuesApi = createApi({
@@ -17,8 +19,16 @@ export const issuesApi = createApi({
     }),
     tagTypes: ['Issue'],
     endpoints: (builder) => ({
-        getAllIssues: builder.query<IApiGetIssues, void>({
+        getAllIssues: builder.query<IApiResponseIssues, void>({
             query: () => '/tasks',
+            transformResponse: (
+                response: IApiGetIssues,
+            ): IApiResponseIssues => {
+                return {
+                    data: response.data,
+                    boardNameList: uniqueArrayBoardsById(response.data),
+                }
+            },
             providesTags: ['Issue'],
         }),
         getAllUsers: builder.query<IMenuItemToSelect[], void>({

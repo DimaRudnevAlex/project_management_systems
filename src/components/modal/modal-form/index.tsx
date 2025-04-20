@@ -40,7 +40,7 @@ const ModalForm = () => {
         useGetIssueByIdQuery(issueId ?? skipToken, {
             refetchOnMountOrArgChange: true,
         })
-    // TODO баг, если поменять статус задачи через drag, то в модалке будет старое значение, хотя на странице всех задач все обновится
+    // TODO баг, если поменять статус задачи через drag, то в модалке будет старое значение, хотя на странице всех задач все обновится - гонка данных в modal
     // TODO можно просто сбрасывать весь кеш задач, но тогда смысл библиотеки кеширования(
     const {
         control,
@@ -60,8 +60,8 @@ const ModalForm = () => {
             await createOrUpdateIssue(
                 createBodyFromRequest(issueId, formData),
             ).unwrap()
-        } catch (e: any) {
-            console.error(`Не удалось отправить данные ( ${e?.data?.message}`)
+        } catch (e) {
+            console.error(`Не удалось отправить данные (`)
         } finally {
             handleCloseModal()
             //TODO Сброс кэша boardsApi иногда не отрабатывает(хотя делаю одно и тоже), надо разобраться
