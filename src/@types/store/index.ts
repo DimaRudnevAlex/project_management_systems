@@ -16,4 +16,5 @@ export interface IssuesState {
 export interface ConfigForModal {
     issueId: number | null
     boardId: number | null
+    ToBoard: boolean
 }

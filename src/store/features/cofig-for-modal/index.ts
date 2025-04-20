@@ -8,6 +8,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 const initialState: ConfigForModal = {
     issueId: null,
     boardId: null,
+    ToBoard: false,
 }
 
 export const configForModalSlice = createSlice({
@@ -16,11 +17,16 @@ export const configForModalSlice = createSlice({
     reducers: {
         changeIssueIdForEdit: (
             state,
-            action: PayloadAction<{ issueId: number; boardId: number }>,
+            action: PayloadAction<{
+                issueId: number
+                boardId: number
+                ToBoard: boolean
+            }>,
         ) => {
-            const { boardId, issueId } = action.payload
+            const { boardId, issueId, ToBoard } = action.payload
             state.issueId = issueId
             state.boardId = boardId
+            state.ToBoard = ToBoard
         },
         clearConfigForModal: () => {
             return initialState

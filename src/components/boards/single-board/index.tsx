@@ -55,7 +55,7 @@ const SingleBoard = () => {
                     Количество задач: {boardProperty.taskCount}
                 </Typography>
             </Grid>
-            <DragOnDropBoard data={SingleBoardData!.data} />
+            <DragOnDropBoard data={SingleBoardData!.data} boardId={+id!} />
             <Grid size={1} paddingInline={1}></Grid>
         </>
     )
