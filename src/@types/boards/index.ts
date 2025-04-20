@@ -29,4 +29,5 @@ export interface IOneBoard {
 
 export interface IPropsDrag {
     data: IOneBoard[]
+    boardId: number
 }

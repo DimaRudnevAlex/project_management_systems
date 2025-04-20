@@ -1,15 +1,25 @@
 import { IOneBoard, IPropsDrag } from '@/@types/boards'
 import { IIssue } from '@/@types/issues'
+import { useAppDispatch } from '@/@types/store'
+import { changeIssueIdForEdit } from '@/store/features/cofig-for-modal'
 import { useUpdateStatusDragMutation } from '@/store/services/boardsApi'
 import { tokens } from '@/theme'
+import { useModal } from '@/utils/hooks'
 import { Avatar, Box, Grid, Typography, useTheme } from '@mui/material'
 import React, { FC, useState } from 'react'
 
-const DragOnDropBoard: FC<IPropsDrag> = ({ data }) => {
-    const [boards, setBoards] = useState<IOneBoard[]>(
+const DragOnDropBoard: FC<IPropsDrag> = ({ data, boardId }) => {
+    const dispatch = useAppDispatch()
+    const [boards, setBoards] = useState<IOneBoard[]>(() =>
         JSON.parse(JSON.stringify(data)),
     )
-    // TODO
+    const { handleOpenModal } = useModal()
+    const handleClick = (issueId: number) => {
+        console.log(issueId, boardId)
+        dispatch(changeIssueIdForEdit({ issueId, boardId, ToBoard: false }))
+        handleOpenModal()
+    }
+
     const [updateStatus] = useUpdateStatusDragMutation()
 
     const [currentBoard, setCurrentBoard] = useState<IOneBoard | null>(null)
@@ -152,6 +162,7 @@ const DragOnDropBoard: FC<IPropsDrag> = ({ data }) => {
                     </Typography>
                     {board.cards.map((item) => (
                         <Box
+                            onClick={() => handleClick(item.id)}
                             className="item"
                             key={item.id}
                             width="100%"

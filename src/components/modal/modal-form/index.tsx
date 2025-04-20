@@ -29,7 +29,9 @@ const ModalForm = () => {
 
     const [createOrUpdateIssue, { isLoading }] =
         useAddNewIssueOrUpdateIssueMutation()
-    const { issueId, boardId } = useAppSelector(selectIssueIdConfigForModal)
+    const { issueId, boardId, ToBoard } = useAppSelector(
+        selectIssueIdConfigForModal,
+    )
     const { data: MenuItemBoards, isLoading: isSuccessMenuBoards } =
         useGetAllBoardsQuery()
     const { data: MenuItemUsers, isLoading: isSuccessMenuUsers } =
@@ -50,6 +52,7 @@ const ModalForm = () => {
     if (isSuccessMenuBoards || isSuccessMenuUsers || isSuccessCurrentIssue) {
         return <h1>Loading...</h1>
     }
+
     const handleSubmitForm = async (formData: IFormData) => {
         //TODO обработать ошибки:1) Получить ошибку при submit формы поставьте в функцию createOrUpdateIssue аргументом: { issueId , body: { something: 'error' }}
         //TODO                   2) Получить успех при submit формы поставьте в функцию createOrUpdateIssue аргументом: createBodyFromRequest(issueId, formData)
@@ -148,13 +151,16 @@ const ModalForm = () => {
                         type="submit"
                         text={`${issueId ? 'Обновить' : 'Создать'} задачу`}
                     />
-                    {boardId && (
+                    {ToBoard && (
                         <UiButton
                             text="Перейти к доске"
                             onClick={handleClickToBoard}
                         />
                     )}
                 </Box>
+                {/*<button type="button" onClick={foo}>*/}
+                {/*    Click*/}
+                {/*</button>*/}
             </Box>
         </form>
     )
