@@ -1,4 +1,6 @@
 //Api
+import { ISSUE_STATUS } from '@/utils/constants'
+
 export interface IApiGetIssues {
     data: IIssue[]
 }
@@ -13,7 +15,7 @@ export interface IIssue {
     title: string
     description: string
     priority: string
-    status: string
+    status: ISSUE_STATUS
     assignee: IAssignee
     boardId: number
     boardName: string

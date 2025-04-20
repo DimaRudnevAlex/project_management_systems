@@ -7,8 +7,11 @@ import { uniqueArrayBoardsById } from '@/utils/helper'
 import { useMemo } from 'react'
 
 const IssuesRoot = () => {
-    const { data, isLoading, isError } = useGetAllIssuesQuery()
-    // TODO выексти в RTK
+    const { data, isLoading, isError } = useGetAllIssuesQuery(undefined, {
+        refetchOnMountOrArgChange: true,
+    })
+    //TODO Необходимо, когда происходит updateStatus в drag. Скорее всего можно в RTK Query в методе onQueryStarted изменить кешированные данные
+    // TODO вынести в RTK
     const boardNameList = useMemo(
         () => (data ? uniqueArrayBoardsById(data.data) : []),
         [data],

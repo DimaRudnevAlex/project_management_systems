@@ -8,6 +8,7 @@ import {
 } from '@/store/features/cofig-for-modal'
 import { boardsApi, useGetAllBoardsQuery } from '@/store/services/boardsApi'
 import {
+    issuesApi,
     useAddNewIssueOrUpdateIssueMutation,
     useGetAllUsersQuery,
     useGetIssueByIdQuery,
@@ -34,8 +35,11 @@ const ModalForm = () => {
     const { data: MenuItemUsers, isLoading: isSuccessMenuUsers } =
         useGetAllUsersQuery()
     const { data: dataCurrentIssue, isLoading: isSuccessCurrentIssue } =
-        useGetIssueByIdQuery(issueId ?? skipToken)
-
+        useGetIssueByIdQuery(issueId ?? skipToken, {
+            refetchOnMountOrArgChange: true,
+        })
+    // TODO баг, если поменять статус задачи через drag, то в модалке будет старое значение, хотя на странице всех задач все обновится
+    // TODO можно просто сбрасывать весь кеш задач, но тогда смысл библиотеки кеширования(
     const {
         control,
         register,
@@ -47,8 +51,8 @@ const ModalForm = () => {
         return <h1>Loading...</h1>
     }
     const handleSubmitForm = async (formData: IFormData) => {
-        //TODO обработать ошибки:1) Получить ошибку при submit формы подставте в функцию createOrUpdateIssue аргументом: { issueId , body: { something: 'error' }}
-        //TODO                   2) Получить успех при submit формы подставте в функцию createOrUpdateIssue аргументом: createBodyFromRequest(issueId, formData)
+        //TODO обработать ошибки:1) Получить ошибку при submit формы поставьте в функцию createOrUpdateIssue аргументом: { issueId , body: { something: 'error' }}
+        //TODO                   2) Получить успех при submit формы поставьте в функцию createOrUpdateIssue аргументом: createBodyFromRequest(issueId, formData)
         try {
             await createOrUpdateIssue(
                 createBodyFromRequest(issueId, formData),
@@ -57,8 +61,9 @@ const ModalForm = () => {
             console.error(`Не удалось отправить данные ( ${e?.data?.message}`)
         } finally {
             handleCloseModal()
-            //TODO Иногда не отрабатывает(хотя делаю одно и тоже), надо разобраться
+            //TODO Сброс кэша boardsApi иногда не отрабатывает(хотя делаю одно и тоже), надо разобраться
             dispatch(boardsApi.util.resetApiState())
+            dispatch(issuesApi.util.resetApiState())
             dispatch(clearConfigForModal())
         }
     }
