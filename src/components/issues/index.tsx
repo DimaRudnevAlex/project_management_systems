@@ -5,9 +5,7 @@ import { selectIssuesByFilter } from '@/store/features/isssues/isssuesSlice.ts'
 import { useGetAllIssuesQuery } from '@/store/services/issuesApi'
 
 const IssuesRoot = () => {
-    const { data, isLoading, isError } = useGetAllIssuesQuery(undefined, {
-        refetchOnMountOrArgChange: true,
-    })
+    const { data, isLoading, isError } = useGetAllIssuesQuery()
 
     const FilteredData = useAppSelector((state) =>
         selectIssuesByFilter(state, data),

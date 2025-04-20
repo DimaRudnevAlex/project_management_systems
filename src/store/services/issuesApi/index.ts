@@ -10,14 +10,14 @@ import { uniqueArrayBoardsById } from '@/utils/helper'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const issuesApi = createApi({
-    reducerPath: 'issuesApi',
+    reducerPath: 'Api',
     baseQuery: fetchBaseQuery({
         // Я добавил API_URL в .env, но на всякий случай оставлю так, хотя понимаю что личные данные лучше не кидать в гит-хаб
         // Но забыл добавить в .gitignore(
         baseUrl: import.meta.env.VITE_API_URL ?? 'http://localhost:8080/api/v1',
         headers: { accept: 'application/json' },
     }),
-    tagTypes: ['Issue'],
+    tagTypes: ['Issue', 'Board', 'Issues', 'Boards'],
     endpoints: (builder) => ({
         getAllIssues: builder.query<IApiResponseIssues, void>({
             query: () => '/tasks',
@@ -29,7 +29,7 @@ export const issuesApi = createApi({
                     boardNameList: uniqueArrayBoardsById(response.data),
                 }
             },
-            providesTags: ['Issue'],
+            providesTags: ['Issues'],
         }),
         getAllUsers: builder.query<IMenuItemToSelect[], void>({
             query: () => '/users',
@@ -65,7 +65,7 @@ export const issuesApi = createApi({
                     body: JSON.stringify(body),
                 }
             },
-            invalidatesTags: ['Issue'],
+            invalidatesTags: ['Issue', 'Boards', 'Issues', 'Board'],
         }),
     }),
 })

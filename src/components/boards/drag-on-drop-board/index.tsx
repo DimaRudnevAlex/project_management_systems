@@ -10,7 +10,7 @@ import React, { FC, useState } from 'react'
 
 const DragOnDropBoard: FC<IPropsDrag> = ({ data, boardId }) => {
     const dispatch = useAppDispatch()
-    const [boards, setBoards] = useState<IOneBoard[]>(() =>
+    const [boards, setBoards] = useState<IOneBoard[]>(
         JSON.parse(JSON.stringify(data)),
     )
     const { handleOpenModal } = useModal()

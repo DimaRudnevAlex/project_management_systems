@@ -8,7 +8,6 @@ import {
 } from '@/store/features/cofig-for-modal'
 import { boardsApi, useGetAllBoardsQuery } from '@/store/services/boardsApi'
 import {
-    issuesApi,
     useAddNewIssueOrUpdateIssueMutation,
     useGetAllUsersQuery,
     useGetIssueByIdQuery,
@@ -40,8 +39,7 @@ const ModalForm = () => {
         useGetIssueByIdQuery(issueId ?? skipToken, {
             refetchOnMountOrArgChange: true,
         })
-    // TODO баг, если поменять статус задачи через drag, то в модалке будет старое значение, хотя на странице всех задач все обновится - гонка данных в modal
-    // TODO можно просто сбрасывать весь кеш задач, но тогда смысл библиотеки кеширования(
+
     const {
         control,
         register,
@@ -66,7 +64,6 @@ const ModalForm = () => {
             handleCloseModal()
             //TODO Сброс кэша boardsApi иногда не отрабатывает(хотя делаю одно и тоже), надо разобраться
             dispatch(boardsApi.util.resetApiState())
-            dispatch(issuesApi.util.resetApiState())
             dispatch(clearConfigForModal())
         }
     }
@@ -158,9 +155,6 @@ const ModalForm = () => {
                         />
                     )}
                 </Box>
-                {/*<button type="button" onClick={foo}>*/}
-                {/*    Click*/}
-                {/*</button>*/}
             </Box>
         </form>
     )
