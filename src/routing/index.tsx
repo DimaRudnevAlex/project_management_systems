@@ -1,19 +1,39 @@
 import MainLayout from '@/layouts/main-layout'
-import BoardByIdPage from '@/pages/board-by-id-page'
-import BoardsPage from '@/pages/boards-page'
-import IssuesPage from '@/pages/issues-page'
 import { configPage } from '@/utils/config-page'
+import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router'
+
+const IssuesPage = lazy(() => import('@/pages/issues-page'))
+const BoardsPage = lazy(() => import('@/pages/boards-page'))
+const BoardByIdPage = lazy(() => import('@/pages/board-by-id-page'))
 
 const AppRouting = () => {
     return (
         <Routes>
             <Route element={<MainLayout />}>
-                <Route path={configPage.BOARDS} element={<BoardsPage />} />
-                <Route path={configPage.ISSUES} element={<IssuesPage />} />
+                <Route
+                    path={configPage.ISSUES}
+                    element={
+                        <Suspense fallback={<h1>Loading...</h1>}>
+                            <IssuesPage />
+                        </Suspense>
+                    }
+                />
+                <Route
+                    path={configPage.BOARDS}
+                    element={
+                        <Suspense fallback={<h1>Loading...</h1>}>
+                            <BoardsPage />
+                        </Suspense>
+                    }
+                />
                 <Route
                     path={configPage.BOARD_BY_ID}
-                    element={<BoardByIdPage />}
+                    element={
+                        <Suspense fallback={<h1>Loading...</h1>}>
+                            <BoardByIdPage />
+                        </Suspense>
+                    }
                 />
                 <Route
                     path={'/*'}
