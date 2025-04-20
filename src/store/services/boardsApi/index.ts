@@ -3,18 +3,10 @@ import {
     IApiGetBoards,
     IBoardForSinglePage,
 } from '@/@types/boards'
+import { issuesApi } from '@/store/services/issuesApi'
 import { ISSUE_STATUS } from '@/utils/constants'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export const boardsApi = createApi({
-    reducerPath: 'boardsApi',
-    baseQuery: fetchBaseQuery({
-        // Я добавил API_URL в .env, но на всякий случай оставлю так, хотя понимаю что личные данные лучше не кидать в гит-хаб
-        // Но забыл добавить в .gitignore
-        baseUrl: import.meta.env.VITE_API_URL ?? 'http://localhost:8080/api/v1',
-        headers: { accept: 'application/json' },
-    }),
-    tagTypes: ['Board'],
+export const boardsApi = issuesApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllBoards: builder.query<IApiGetBoards, void>({
             query: () => '/boards',
@@ -29,6 +21,7 @@ export const boardsApi = createApi({
                     })),
                 }
             },
+            providesTags: ['Boards'],
         }),
         getBoardById: builder.query<IBoardForSinglePage, string>({
             query: (id) => `/boards/${id}`,
@@ -76,7 +69,7 @@ export const boardsApi = createApi({
                     body: JSON.stringify({ status }),
                 }
             },
-            invalidatesTags: ['Board'],
+            invalidatesTags: ['Issues', 'Issue', 'Board'],
         }),
     }),
 })

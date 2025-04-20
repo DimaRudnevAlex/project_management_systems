@@ -14,9 +14,7 @@ const SingleBoard = () => {
     const colors = tokens(theme.palette.mode)
 
     const { data: SingleBoardData, isLoading: SingleBoardsLoading } =
-        useGetBoardByIdQuery(id!, {
-            refetchOnMountOrArgChange: true,
-        })
+        useGetBoardByIdQuery(id!)
     //TODO из-за того что в /boards/{boardId} не возвращает boardName приходится искать по id во всех boards
     const { data: AllBoardsData, isLoading: AllBoardsLoading } =
         useGetAllBoardsQuery()
