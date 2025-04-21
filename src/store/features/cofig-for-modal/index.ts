@@ -10,7 +10,7 @@ const initialState: ConfigForModal = {
     boardId: null,
     ToBoard: false,
 }
-
+// Для конфига modal в зависимости от ситуации
 export const configForModalSlice = createSlice({
     name: 'config-for-modal',
     initialState,
@@ -42,6 +42,7 @@ export const selectIssueIdConfigForModal = (state: AppState) =>
 
 export default configForModalSlice.reducer
 
+// Уведомления
 export const addOrUpdateIssue = (startAppListening: AppStartListening) => {
     startAppListening({
         matcher: issuesApi.endpoints.addNewIssueOrUpdateIssue.matchFulfilled,

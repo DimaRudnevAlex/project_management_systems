@@ -1,6 +1,6 @@
-//Api
 import { ISSUE_STATUS } from '@/utils/constants'
 
+//Api
 export interface IApiGetIssues {
     data: IIssue[]
 }
@@ -36,7 +36,6 @@ export interface IUsers extends IAssignee {
     teamName: string
     tasksCount: number
 }
-export type IBoard = Pick<IIssue, 'boardId' | 'boardName'>
 
 // При запросе информации об одной задаче нет данных об boardId, только boardName(
 export interface GetOneIssue {

@@ -10,7 +10,6 @@ export const store = configureStore({
         issues: issuesReducer,
         configForModal: configForModalReducer,
         [issuesApi.reducerPath]: issuesApi.reducer,
-        [boardsApi.reducerPath]: boardsApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()

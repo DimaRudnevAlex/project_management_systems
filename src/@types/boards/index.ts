@@ -1,7 +1,7 @@
-//Api
 import { IIssue, IMenuItemToSelect } from '@/@types/issues'
 import { ISSUE_STATUS } from '@/utils/constants'
 
+//Api
 export interface IApiGetBoards {
     data: IBoard[]
     menuItem: IMenuItemToSelect[]

@@ -15,7 +15,7 @@ const SingleBoard = () => {
 
     const { data: SingleBoardData, isLoading: SingleBoardsLoading } =
         useGetBoardByIdQuery(id!)
-    //TODO из-за того что в /boards/{boardId} не возвращает boardName приходится искать по id во всех boards
+    //TODO из-за того что  /boards/{boardId} не возвращает boardName приходится искать по id во всех boards
     const { data: AllBoardsData, isLoading: AllBoardsLoading } =
         useGetAllBoardsQuery()
 

@@ -10,7 +10,7 @@ const initialState: IssuesState = {
     filterByBoardId: null,
     filterByStatus: '',
 }
-//Могу сделать одним редюсером, а не тремя. Но если смысл...
+
 export const issuesSlice = createSlice({
     name: 'issues',
     initialState,
@@ -38,6 +38,7 @@ export const {
 
 export const selectFilterOptions = (state: AppState) => state.issues
 
+// Отфильтрованный массив, с кешированием результата
 export const selectIssuesByFilter = createAppSelector(
     selectFilterOptions,
     (_state: AppState, data: IApiGetIssues | undefined) => {
