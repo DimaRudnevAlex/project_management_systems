@@ -8,14 +8,14 @@ import { useModal } from '@/utils/hooks'
 import { Avatar, Box, Grid, Typography, useTheme } from '@mui/material'
 import React, { FC, useState } from 'react'
 
+//TODO я драг делал только на vanilla JS, Sorry за такой компонент, его необходимо декомпозировать
 const DragOnDropBoard: FC<IPropsDrag> = ({ data, boardId }) => {
     const dispatch = useAppDispatch()
-    const [boards, setBoards] = useState<IOneBoard[]>(
+    const [boards, setBoards] = useState<IOneBoard[]>(() =>
         JSON.parse(JSON.stringify(data)),
     )
     const { handleOpenModal } = useModal()
     const handleClick = (issueId: number) => {
-        console.log(issueId, boardId)
         dispatch(changeIssueIdForEdit({ issueId, boardId, ToBoard: false }))
         handleOpenModal()
     }
@@ -95,7 +95,7 @@ const DragOnDropBoard: FC<IPropsDrag> = ({ data, boardId }) => {
                 )
             }
         } catch (_e) {
-            alert('Lol!')
+            console.log(_e)
         } finally {
             const target = e.target as HTMLDivElement
             const parent = target.closest('.item') as HTMLDivElement
@@ -135,7 +135,7 @@ const DragOnDropBoard: FC<IPropsDrag> = ({ data, boardId }) => {
                 }),
             )
         } catch (_e) {
-            alert('KEk')
+            console.log(_e)
         } finally {
             const target = e.target as HTMLDivElement
             const parent = target.closest('.item') as HTMLDivElement

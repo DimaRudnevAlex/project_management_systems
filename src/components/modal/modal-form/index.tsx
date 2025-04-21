@@ -14,7 +14,7 @@ import {
 } from '@/store/services/issuesApi'
 import { configPage } from '@/utils/config-page'
 import { LIST_ISSUE_STATUS, LIST_PRIORITIES } from '@/utils/constants'
-import { createBodyFromRequest, defaultValueForModal } from '@/utils/helper'
+import { createBodyToRequest, defaultValueForModal } from '@/utils/helper'
 import { useModal } from '@/utils/hooks'
 import { Box, TextField, Typography } from '@mui/material'
 import { skipToken } from '@reduxjs/toolkit/query'
@@ -26,11 +26,12 @@ const ModalForm = () => {
     const dispatch = useAppDispatch()
     const { handleCloseModal } = useModal()
 
-    const [createOrUpdateIssue, { isLoading }] =
-        useAddNewIssueOrUpdateIssueMutation()
     const { issueId, boardId, ToBoard } = useAppSelector(
         selectIssueIdConfigForModal,
     )
+
+    const [createOrUpdateIssue, { isLoading }] =
+        useAddNewIssueOrUpdateIssueMutation()
     const { data: MenuItemBoards, isLoading: isSuccessMenuBoards } =
         useGetAllBoardsQuery()
     const { data: MenuItemUsers, isLoading: isSuccessMenuUsers } =
@@ -52,13 +53,14 @@ const ModalForm = () => {
     }
 
     const handleSubmitForm = async (formData: IFormData) => {
-        //TODO обработать ошибки:1) Получить ошибку при submit формы поставьте в функцию createOrUpdateIssue аргументом: { issueId , body: { something: 'error' }}
-        //TODO                   2) Получить успех при submit формы поставьте в функцию createOrUpdateIssue аргументом: createBodyFromRequest(issueId, formData)
+        //TODO 1) Получить ошибку при submit формы поставьте в функцию createOrUpdateIssue аргументом: { issueId , body: { something: 'error' }}
+        //TODO 2) Получить успех при submit формы поставьте в функцию createOrUpdateIssue аргументом: createBodyToRequest(issueId, formData)
         try {
+            // Из конфига modal определяем создаем или обновляем задачу
             await createOrUpdateIssue(
-                createBodyFromRequest(issueId, formData),
+                createBodyToRequest(issueId, formData),
             ).unwrap()
-        } catch (e) {
+        } catch (_e) {
             console.error(`Не удалось отправить данные (`)
         } finally {
             handleCloseModal()

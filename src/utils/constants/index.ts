@@ -1,4 +1,4 @@
-import { ArrayFromObjIssuesStatus } from '@/utils/helper'
+import { arrayFromObjIssuesStatus } from '@/utils/helper'
 
 export const ISSUE_STATUS = {
     BACKLOG: 'Backlog',
@@ -14,8 +14,8 @@ export const PRIORITIES = {
 
 export type ISSUE_STATUS = (typeof ISSUE_STATUS)[keyof typeof ISSUE_STATUS]
 
-export const LIST_ISSUE_STATUS = ArrayFromObjIssuesStatus(ISSUE_STATUS)
-export const LIST_PRIORITIES = ArrayFromObjIssuesStatus(PRIORITIES)
+export const LIST_ISSUE_STATUS = arrayFromObjIssuesStatus(ISSUE_STATUS)
+export const LIST_PRIORITIES = arrayFromObjIssuesStatus(PRIORITIES)
 
 export const ERRORS = {
     ERROR_LOADING: 'Не удалось загрузить данные (',

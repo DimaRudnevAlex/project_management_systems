@@ -1,54 +1,56 @@
-# React + TypeScript + Vite
+# Система управления проектами
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Это веб-приложение для управления вашими проектами. Оно позволяется создавать и редактировать задачи.
+Присутствует функционал фильтрации по статусу задачи и по названию проекта,
+к которому относится задача, и функционал поиска задачи по названию.
+Так же реализован функционал Drag and Drop по статусу задачи.
 
-Currently, two official plugins are available:
+## Установка
+Следуйте этим шагам, чтобы установить и запустить приложение:
+1. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/DimaRudnevAlex/project_management_systems.git
+2. Перейдите в директорию src/server и запустите команду
+   ```bash
+   make initial-start
+3. Затем перейдите в основную директорию и запустите команду
+   ```bash
+   npm install
+4. Как установка закончится запустите команду
+   ```bash
+   npm run dev
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Системные требования
+- необходим Node.js
+- git
+- npm
+- Docker Desktop
 
-## Expanding the ESLint configuration
+### Используемые библиотеки
+- React - для синхронизации интерфейса, с актуальными данными
+- Redux Toolkit - глобальный state-менеджер
+- RTK Query - для кеширования запросов
+- MUI components - для стилизации
+- React Router - для маршрутизации страниц
+- React Hook Form - для валидации и управления формами
+- React Tiny Toast - для уведомлений
+- ESLint - для статического анализа кода
+- Prettier - для унифицирования стиля кодирования
+- Vite - сборщик проекта
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Использование
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### На странице /issues
+1. Доступны задачи всех проектов, можно сортивароть и искать по названию
+2. В Header есть кнопка смена темы и кнопка "Добавить задачу", при нажатии на нее
+   появится модальное окно с валидацией данных
+3. Также можно редактировать имеющуюся задачу
+4. При успешном или не очень изменении/создании задачи будет появляться уведомление верху экрана
+### На странице /boards
+1. Доступны все проекты и можно перейти к конкретному для более детальной информации
+### На странице /board/:id
+1. Показаны все задачи одного проекта, сортированные по статусу выполнения
+2. Можно менять статус задачи через перетаскивание из одной колонки в другую
+3. Кликнув на задачу откроется модальное окно с подробной информацией
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```

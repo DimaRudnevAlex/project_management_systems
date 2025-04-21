@@ -6,7 +6,7 @@ import { Navigate, Route, Routes } from 'react-router'
 const IssuesPage = lazy(() => import('@/pages/issues-page'))
 const BoardsPage = lazy(() => import('@/pages/boards-page'))
 const BoardByIdPage = lazy(() => import('@/pages/board-by-id-page'))
-
+// Для разделения бандла на чанки, чтобы не грузить не нужные страницы, а подгружать по мере надобности пользователю
 const AppRouting = () => {
     return (
         <Routes>

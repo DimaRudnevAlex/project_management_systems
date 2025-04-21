@@ -9,6 +9,7 @@ import { ISSUE_STATUS } from '@/utils/constants'
 import { SelectChangeEvent } from '@mui/material'
 import { ChangeEvent, createContext, useContext } from 'react'
 
+// Логика изменения параметров фильтрации
 export const useChangeFilterOption = () => {
     const dispatch = useAppDispatch()
 
