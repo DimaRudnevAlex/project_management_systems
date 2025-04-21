@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material'
 
 const NavMenu = () => {
     return (
-        <Box component="nav" display="flex" gap={3} flexDirection="row">
+        <Box component="nav" display="flex" gap={3} alignItems="center">
             <CustomLinkNav to={configPage.ISSUES}>
                 <Typography variant="h5" fontSize={{ xs: 14, sm: 18, md: 24 }}>
                     Все задачи
